@@ -15,17 +15,29 @@
       <fieldset>
         <legend><span class="number">2</span> Details des reservations</legend>
         <?php
-        for ($num = 1; $num <= $reservation->place(); $num++)
+        for ($num = 0; $num < $reservation->place(); $num++)
         {
-          echo "<input type='text' name='id_nom_".$num."' placeholder='Nom' value=".$reservation->personne()[$num-1][0]." >";
-          if ($nameErr != "")
-          {
-            echo "<span class='error'>* ".$nameErr."</span>";
+          echo "<input type='text' name='id_nom_".$num."' placeholder='Nom'";
+          if (!empty($tab[$num])) {
+            echo "value=".$tab[$num][0]." >";
           }
-          echo "<input type='text' name='id_age_".$num."' placeholder='Age' value=".$reservation->personne()[$num-1][1]." >";
-          if ($ageErr != "")
+          else {
+            echo ">";
+          }
+          if (!empty($nameErr) && $nameErr[$num] != "")
           {
-            echo "<span class='error'>* ".$ageErr."</span>";
+            echo "<span class='error'>* ".$nameErr[$num]."</span>";
+          }
+          echo "<input type='text' name='id_age_".$num."' placeholder='Age'";
+          if (!empty($tab[$num][1])) {
+            echo "value=".$tab[$num][1]." >";
+          }
+          else {
+            echo ">";
+          }
+          if (!empty($nameErr) && $ageErr[$num] != "")
+          {
+            echo "<span class='error'>* ".$ageErr[$num]."</span>";
           }
         }
         ?>

@@ -13,7 +13,12 @@ else {
   $reservation = $_SESSION["res"];
 }
 // define variables and set to empty values
-$nameErr = $destinationErr = $placeErr = $ageErr = "";
+$destinationErr = "";
+$placeErr = "";
+$nameErr = array();
+$ageErr = array();
+$tab = array();
+$error = false;
 $refresh = "";
 
 // gets the current form
@@ -34,6 +39,7 @@ if ($step && $_SERVER["REQUEST_METHOD"] == "POST")
       if ($_POST["id_destination"] == "")
       {
         $destinationErr = "La destination est requise.";
+        $error = true;
       }
       else
       {
@@ -43,10 +49,12 @@ if ($step && $_SERVER["REQUEST_METHOD"] == "POST")
       if (empty($_POST["id_place"]))
       {
         $placeErr = "Le nombre de place est requis.";
+        $error = true;
       }
       else if ((int)input_validation($_POST["id_place"]) < 1 || (int)input_validation($_POST["id_place"]) > 10)
       {
         $placeErr = "Veuillez entrer un nombre compris entre 1 et 10.";
+        $error = true;
       }
       else
       {
@@ -57,8 +65,18 @@ if ($step && $_SERVER["REQUEST_METHOD"] == "POST")
       {
         $reservation->setAssurance("OUI");
       }
+      else {
+        $reservation->setAssurance("NON");
+      }
       $_SESSION["res"] = $reservation;
-      include(PATH . "/views/form2.php");
+      if ($error)
+      {
+        include(PATH . "/views/index.php");
+      }
+      else
+      {
+        include(PATH . "/views/form2.php");
+      }
     }
     break;
     case 2:
@@ -73,35 +91,44 @@ if ($step && $_SERVER["REQUEST_METHOD"] == "POST")
       include(PATH . "/views/index.php");
     }
     else {
-      $tab = array();
-      for ($num = 1; $num <= $reservation->place(); $num++)
+      for ($num = 0; $num < $reservation->place(); $num++)
       {
         if (empty($_POST["id_nom_".$num]))
         {
-          $nameErr = "Le nom est requis.";
+          array_push($nameErr, "Le nom est requis.");
+          $error = true;
         }
         else
         {
           array_push($tab, array(input_validation($_POST["id_nom_".$num])));
-          $nameErr = "";
+          array_push($nameErr, "");
         }
         if (empty($_POST["id_age_".$num]))
         {
-          $ageErr = "L'age est requis.";
+          array_push($ageErr, "L'age est requis.");
+          $error = true;
         }
         else if ((int)input_validation($_POST["id_age_".$num]) < 1)
         {
-          $ageErr = "Veuillez entrer un age correct.";
+          array_push($ageErr, "Veuillez entrer un age correct.");
+          $error = true;
         }
         else
         {
-          array_push($tab[$num -1], input_validation($_POST["id_age_".$num]));
-          $ageErr = "";
+          array_push($tab[$num], input_validation($_POST["id_age_".$num]));
+          array_push($ageErr, "");
         }
       }
-      $reservation->setPersonne($tab);
-      $_SESSION["res"] = $reservation;
-      include(PATH . "/views/form3.php");
+      if ($error)
+      {
+        include(PATH . "/views/form2.php");
+      }
+      else
+      {
+        $reservation->setPersonne($tab);
+        $_SESSION["res"] = $reservation;
+        include(PATH . "/views/form3.php");
+      }
     }
     break;
     case 3:
