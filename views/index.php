@@ -2,7 +2,6 @@
 <html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
-  <!--<meta http-equiv="refresh" content="0";url=http://webmaster.net" >-->
   <title>Reservation</title>
   <link rel="stylesheet" type="text/css" href="static/index.css" />
 </head>
@@ -30,8 +29,10 @@
           echo "<span class='error'>* ".$placeErr."</span>";
         }
         ?>
+        <div id="cancel">
         <label for="job">Assurance annulation</label>
         <input name="id_assurance" type="checkbox" <?php if ($reservation->assurance() == "OUI") echo "checked";?>>
+        </div>
       </fieldset>
       <input type="hidden" name="step" value=1>
       <input type="submit" name="next" value="Etape suivante" />

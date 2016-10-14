@@ -100,3 +100,15 @@
 {
     background: #109177;
 }
+
+div#cancel
+{
+  display: inline-block;
+  width: 100%;
+}
+
+div#cancel label
+{
+  display: inline;
+  padding-right: 62%;
+}
