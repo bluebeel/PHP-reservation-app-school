@@ -22,7 +22,7 @@
           echo "<span class='error'>* ".$destinationErr."</span>";
         }
         ?>
-        <input type="text" name="id_place" placeholder="Nombre de place" value="<?php echo $reservation->place();?>">
+        <input type="text" name="id_place" placeholder="Nombre de place" value="<?php echo $reservation->place();?>" min="1" max="10">
         <?php
         if ($placeErr != "")
         {
