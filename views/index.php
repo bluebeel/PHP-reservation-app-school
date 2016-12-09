@@ -1,44 +1,78 @@
-<!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/html">
-<head>
-  <meta charset="utf-8">
-  <title>Reservation</title>
-  <link rel="stylesheet" type="text/css" href="static/index.css" />
-</head>
-<body>
 
-  <div>
-  </br>
-  <div id="step1" class="form-style-5">
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" name="step1">
-      <fieldset>
-        <legend><span class="number">1</span> Reservation</legend>
-        <p>Le prix de la place est de 10 euros jusqu'à 12 ans et ensuite de 15 euros.</p>
-        <p>Le prix de l'assurance annulation est de 20 euros quel que soit le nombre de voyageurs.</p>
-        <input type="text" name="id_destination" placeholder="Destination" value="<?php echo $reservation->destination();?>">
-        <?php
-        if ($destinationErr != "")
-        {
-          echo "<span class='error'>* ".$destinationErr."</span>";
-        }
-        ?>
-        <input type="text" name="id_place" placeholder="Nombre de place" value="<?php echo $reservation->place();?>" min="1" max="10">
-        <?php
-        if ($placeErr != "")
-        {
-          echo "<span class='error'>* ".$placeErr."</span>";
-        }
-        ?>
-        <div id="cancel">
-        <label for="job">Assurance annulation</label>
-        <input name="id_assurance" type="checkbox" <?php if ($reservation->assurance() == "OUI") echo "checked";?>>
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <title>Reservation app</title>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+    <nav class="light-blue lighten-1">
+    <div class="nav-wrapper">
+      <a href="/tw/" class="brand-logo"> AirBnB</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li class="active"><a href="/tw/">Accueil</a></li>
+        <li><a href="/tw/reservation">Reservation</a></li>
+      </ul>
+    </div>
+    </nav>
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br><br>
+        <div class="row left">
+          <h4 class="header left blue-text text-lighten-1 col s12">Liste des réservations. </h4>
         </div>
-      </fieldset>
-      <input type="hidden" name="step" value=1>
-      <input type="submit" name="next" value="Etape suivante" />
-      <input type="submit" name="cancel" value="Annuler la réservation" />
-    </form>
-  </div>
-</div>
-</body>
+        <div class="row right">
+          <a href="/tw/reservation?action=insert" id="download-button" class="btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">add</i></a>
+        </div>
+        <div class="row center">
+          <table class="centered highlight">
+          <thead>
+            <tr>
+                <th data-field="id">Id</th>
+                <th data-field="destination">Destination</th>
+                <th data-field="assurance">Assurance</th>
+                <th data-field="somme">Total</th>
+                <th data-field="nom-age">Nom - Age</th>
+                <th data-field="edit">Editer</th>
+                <th data-field="delete">Supprimer</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <?php
+            foreach ($reservationList as $value) {
+                echo "<tr>";
+                echo "<td>".$value["ID"]."</td>";
+                echo "<td>".$value["Destination"]."</td>";
+                echo "<td>".$value["Assurance"]."</td>";
+                echo "<td>".$value["Place"]."</td>";
+                echo "<td>";
+                foreach (unserialize($value["Personnes"]) as $element) {
+                    echo "<li>".$element[0]." - ".$element[1]." ans</li>";
+                }
+                echo "</td>";
+                echo "<td><a href='/tw/reservation?action=edit&id=".$value["ID"]."'>Editer</a></td>";
+                echo "<td><a href='/tw/reservation?action=delete&id=".$value["ID"]."'>Supprimer</a></td>";
+                echo "</tr>";
+            }
+            ?>
+          </tbody>
+          </table>
+          <br><br>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  </body>
 </html>

@@ -112,3 +112,29 @@ div#cancel label
   display: inline;
   padding-right: 62%;
 }
+
+div.entry
+{
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+div.entry label
+{
+  display: inline;
+  padding-right: 62%;
+}
+
+div.entry_name
+{
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+div.entry_name label
+{
+  display: inline;
+  padding-right: 79%;
+}

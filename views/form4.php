@@ -1,42 +1,58 @@
+
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/html">
-<head>
-  <meta charset="utf-8">
-  <!--<meta http-equiv="refresh" content="0";url=http://webmaster.net" >-->
-  <title>Reservation</title>
-  <link rel="stylesheet" type="text/css" href="static/index.css" />
-</head>
-<body>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <title>Reservation app</title>
 
-  <div>
-  </br>
-  <div id="step4" class="form-style-5">
-    <fieldset>
-      <legend><span class="number">4</span> Confirmation des reservations</legend>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
 
-      <p>Votre demande a bien été enregistrée</p>
-      <?php
-      $somme = 0;
-      for ($num = 1; $num <= $reservation->place(); $num++)
-      {
-        if ($reservation->personne()[$num-1][1] <= "10")
-        {
-          $somme += 10;
-        }
-        else {
-          $somme += 15;
-        }
-      }
-      echo "<p>Merci de bien vouloir verser la somme de ".$somme." euros sur le compte 000-000000-00</p>";
-      ?>
-    </fieldset>
-    <input type="submit" value="Retour à la page d'accueil" onclick="redirect()"/>
-  </div>
-</div>
-<script>function redirect() {
-  <?php $reservation = new Reservation;
-  $_SESSION["res"] = $reservation; ?>
-  window.location.assign("index.php");
-}</script>
+  <body>
+    <nav class="light-blue lighten-1">
+    <div class="nav-wrapper">
+      <a href="/tw/" class="brand-logo"> AirBnB</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/tw/">Accueil</a></li>
+        <li class="active"><a href="/tw/reservation">Reservation</a></li>
+      </ul>
+    </div>
+    </nav>
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br><br>
+        <div class="collection">
+          <a class="collection-item blue-text text-lighten-1"><span class="badge">4</span>Confirmation de la reservation</a>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel light-blue lighten-1">
+              <span class="white-text">
+                <?php
+                $somme = 0;
+                for ($num = 1; $num <= $_SESSION['res']->place(); $num++)
+                {
+                  if ($_SESSION['res']->personne()[$num-1][1] <= "10")
+                  {
+                    $somme += 10;
+                  }
+                  else {
+                    $somme += 15;
+                  }
+                }
+                echo "Votre demande a bien été enregistrée.";
+                echo "<br>";
+                echo "Merci de bien vouloir verser la somme de ".$somme." euros sur le compte 000-000000-00";
+                ?>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
