@@ -15,10 +15,10 @@
   <body>
     <nav class="light-blue lighten-1">
     <div class="nav-wrapper">
-      <a href="/tw/" class="brand-logo"> AirBnB</a>
+      <a href="/tw/" class="brand-logo"> Reservation app</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/tw/">Accueil</a></li>
-        <li class="active"><a href="/tw/reservation">Reservation</a></li>
+        <li class="active"><a href="/tw/reservation?action=insert">Reservation</a></li>
       </ul>
     </div>
     </nav>
@@ -80,9 +80,21 @@
             <button class="btn waves-effect waves-light light-blue lighten-1" type="submit" name="next" value="Confirmer">Confirmer
               <i class="material-icons right">fast_forward</i>
             </button>
+            <?php if ($_GET["action"] == "insert") {
+                  ?>
             <button class="btn waves-effect waves-light light-blue lighten-1" type="submit" name="cancel" value="Annuler la réservation">Annuler la réservation
               <i class="material-icons left">not_interested</i>
             </button>
+            <?php
+
+              } else {
+                  ?>
+            <button class="btn waves-effect waves-light light-blue lighten-1" type="submit" name="cancel" value="Annuler l'édit'">Annuler l'édit
+              <i class="material-icons left">not_interested</i>
+            </button>
+            <?php
+
+              }?>
           </form>
         <br><br>
 

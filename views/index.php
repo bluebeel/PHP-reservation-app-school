@@ -6,6 +6,7 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="/tw/static/index.css">
     <title>Reservation app</title>
 
     <!--Let browser know website is optimized for mobile-->
@@ -15,10 +16,10 @@
   <body>
     <nav class="light-blue lighten-1">
     <div class="nav-wrapper">
-      <a href="/tw/" class="brand-logo"> AirBnB</a>
+      <a href="/tw/" class="brand-logo"> Reservation app</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li class="active"><a href="/tw/">Accueil</a></li>
-        <li><a href="/tw/reservation">Reservation</a></li>
+        <li><a href="/tw/reservation?action=insert">Reservation</a></li>
       </ul>
     </div>
     </nav>
@@ -32,7 +33,7 @@
           <a href="/tw/reservation?action=insert" id="download-button" class="btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">add</i></a>
         </div>
         <div class="row center">
-          <table class="centered highlight">
+          <table class="highlight">
           <thead>
             <tr>
                 <th data-field="id">Id</th>
@@ -52,7 +53,7 @@
                 echo "<td>".$value["ID"]."</td>";
                 echo "<td>".$value["Destination"]."</td>";
                 echo "<td>".$value["Assurance"]."</td>";
-                echo "<td>".$value["Place"]."</td>";
+                echo "<td>".$value["Somme"]." €</td>";
                 echo "<td>";
                 foreach (unserialize($value["Personnes"]) as $element) {
                     echo "<li>".$element[0]." - ".$element[1]." ans</li>";

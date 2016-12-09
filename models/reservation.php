@@ -1,5 +1,4 @@
 <?php
-
 class Reservation
 {
     private $_destination;
@@ -7,11 +6,12 @@ class Reservation
     private $_personne;
     private $_assurance;
 
-  // GETTER
-  public function destination()
-  {
-      return $this->_destination;
-  }
+ // GETTER
+
+ public function destination()
+ {
+     return $this->_destination;
+ }
 
     public function place()
     {
@@ -28,11 +28,12 @@ class Reservation
         return $this->_personne;
     }
 
-  // SETTER
-  public function setDestination($destination)
-  {
-      $this->_destination = $destination;
-  }
+ // SETTER
+
+ public function setDestination($destination)
+ {
+     $this->_destination = $destination;
+ }
 
     public function setPlace($place)
     {

@@ -15,10 +15,10 @@
   <body>
     <nav class="light-blue lighten-1">
     <div class="nav-wrapper">
-      <a href="/tw/" class="brand-logo"> AirBnB</a>
+      <a href="/tw/" class="brand-logo"> Reservation app</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/tw/">Accueil</a></li>
-        <li class="active"><a href="/tw/reservation">Reservation</a></li>
+        <li class="active"><a href="/tw/reservation?action=insert">Reservation</a></li>
       </ul>
     </div>
     </nav>
@@ -33,20 +33,9 @@
             <div class="card-panel light-blue lighten-1">
               <span class="white-text">
                 <?php
-                $somme = 0;
-                for ($num = 1; $num <= $_SESSION['res']->place(); $num++)
-                {
-                  if ($_SESSION['res']->personne()[$num-1][1] <= "10")
-                  {
-                    $somme += 10;
-                  }
-                  else {
-                    $somme += 15;
-                  }
-                }
                 echo "Votre demande a bien été enregistrée.";
                 echo "<br>";
-                echo "Merci de bien vouloir verser la somme de ".$somme." euros sur le compte 000-000000-00";
+                echo "Merci de bien vouloir verser la somme de ".$sum." euros sur le compte 000-000000-00";
                 ?>
               </span>
             </div>
