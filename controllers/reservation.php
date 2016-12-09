@@ -35,8 +35,6 @@ function reservationController($view, $db)
     }
     if (isset($_GET['id'])) {
         $_SESSION["id"] = $_GET['id'];
-    } else {
-        $_SESSION["id"] = null;
     }
 
     switch ($action) {
@@ -131,7 +129,7 @@ function reservationController($view, $db)
                 break;
             case 3:
                 if (isset($_POST['before']) && $_POST['before'] == "Retour à la page précédente") {
-                    $view->assign("person", $person);
+                    $view->assign("person", $_SESSION["res"]->personne());
                     $view->assign("nameErr", $nameErr);
                     $view->assign("ageErr", $ageErr);
                     $view->display('form2.php');
@@ -277,14 +275,16 @@ function reservationController($view, $db)
                 } else {
                     $result = $db->connect()->prepare("UPDATE reservation SET Destination=?, Place=?, Assurance=?, Personnes=? WHERE ID=?");
                     $result->bind_param("ssssi", $Destination, $Place, $Assurance, $Personnes, $id);
-                    var_dump($result);
+                    //var_dump($result);
                     $id = (int)$_SESSION["id"];
+                    var_dump($id);
+                    var_dump($_SESSION["res"]);
                     $Destination = $_SESSION["res"]->destination();
                     $Place = $_SESSION["res"]->place();
                     $Assurance = $_SESSION["res"]->assurance();
                     $Personnes = serialize($_SESSION["res"]->personne());
                     $result->execute();
-                    var_dump($result);
+                    //var_dump($result);
                     $result->close();
                     $reservation     = new Reservation;
                     $_SESSION["res"] = $reservation;
