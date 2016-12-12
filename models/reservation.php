@@ -1,17 +1,20 @@
 <?php
 class Reservation
 {
+    /*
+     * Model class for a reservation
+     */
     private $_destination;
     private $_place;
     private $_personne;
     private $_assurance;
 
- // GETTER
+    // GETTER
 
- public function destination()
- {
-     return $this->_destination;
- }
+    public function destination()
+    {
+        return $this->_destination;
+    }
 
     public function place()
     {
@@ -28,12 +31,12 @@ class Reservation
         return $this->_personne;
     }
 
- // SETTER
+    // SETTER
 
- public function setDestination($destination)
- {
-     $this->_destination = $destination;
- }
+    public function setDestination($destination)
+    {
+        $this->_destination = $destination;
+    }
 
     public function setPlace($place)
     {

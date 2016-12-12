@@ -31,6 +31,10 @@ function reservationController($view, $db)
         $action = null;
     }
 
+
+    /** gets the id from the query if we want to edit or delete a reservation
+     *  the id help us to know which reservation we are editing or deleting
+     */
     if (isset($_GET['id'])) {
         $_SESSION["id"] = $_GET['id'];
     }
@@ -331,15 +335,21 @@ function reservationController($view, $db)
 
             default:
                 $result = $db->select("SELECT * FROM reservation WHERE ID=" . $_SESSION["id"] . "");
-                $_SESSION["res"]->setDestination($result[0]["Destination"]);
-                $_SESSION["res"]->setPlace($result[0]["Place"]);
-                $_SESSION["res"]->setAssurance($result[0]["Assurance"]);
-                $_SESSION["res"]->setPersonne(unserialize($result[0]["Personnes"]));
-                $view->assign("reservation", $reservation);
-                $view->assign("placeErr", $placeErr);
-                $view->assign("destinationErr", $destinationErr);
-                $view->display('form1.php');
-                break;
+                if (empty($result)) {
+                    header("Location: /tw/reservation?action=insert");
+                    die();
+                    break;
+                } else {
+                    $_SESSION["res"]->setDestination($result[0]["Destination"]);
+                    $_SESSION["res"]->setPlace($result[0]["Place"]);
+                    $_SESSION["res"]->setAssurance($result[0]["Assurance"]);
+                    $_SESSION["res"]->setPersonne(unserialize($result[0]["Personnes"]));
+                    $view->assign("reservation", $reservation);
+                    $view->assign("placeErr", $placeErr);
+                    $view->assign("destinationErr", $destinationErr);
+                    $view->display('form1.php');
+                    break;
+                }
             }
         }
 

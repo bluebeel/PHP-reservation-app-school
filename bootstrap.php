@@ -1,18 +1,15 @@
 <?php
 require('config.php');
+require('core/database/database.php');
+require('core/router/router.php');
+require('core/view/loader.php');
+require('core/view/view.php');
 
-require('core/autoload/autoload.php');
+/*
+ * Loading important classes.
+ */
 
-$autoloader = new Autoload();
-spl_autoload_register([$autoloader, 'load']);
-$autoloader->register('loader',
-function () {
-    return require(PATH . '/core/view/loader.php');
-});
-$autoloader->register('db',
-function () {
-    return require(PATH . '/core/database/database.php');
-});
 $view = new View(new Loader(PATH . '/views/'));
 $router = new Router();
+$router->setView($view);
 $db = new Db();
