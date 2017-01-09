@@ -25,6 +25,7 @@ class Router
 
     public function setNotFound($url)
     {
+        $this->_view->assign("url", $url);
         $this->_view->display("404.php");
     }
 

@@ -26,50 +26,11 @@
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
         <br><br>
-        <div class="row left">
-          <h4 class="header left blue-text text-lighten-1 col s12">Liste des réservations. </h4>
-        </div>
-        <div class="row right">
-          <a href="/tw/reservation?action=insert" id="download-button" class="btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">add</i></a>
-        </div>
         <div class="row center">
-          <table class="highlight">
-          <thead>
-            <tr>
-                <th data-field="id">Id</th>
-                <th data-field="destination">Destination</th>
-                <th data-field="assurance">Assurance</th>
-                <th data-field="somme">Total</th>
-                <th data-field="nom-age">Nom - Age</th>
-                <th data-field="edit">Editer</th>
-                <th data-field="delete">Supprimer</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <?php
-            foreach ($reservationList as $value) {
-                echo "<tr>";
-                echo "<td>".$value["ID"]."</td>";
-                echo "<td>".$value["Destination"]."</td>";
-                echo "<td>".$value["Assurance"]."</td>";
-                echo "<td>".$value["Somme"]." €</td>";
-                echo "<td>";
-                foreach (unserialize($value["Personnes"]) as $element) {
-                    echo "<li>".$element[0]." - ".$element[1]." ans</li>";
-                }
-                echo "</td>";
-                echo "<td><a href='/tw/reservation?action=edit&id=".$value["ID"]."'>Editer</a></td>";
-                echo "<td><a href='/tw/reservation?action=delete&id=".$value["ID"]."'>Supprimer</a></td>";
-                echo "</tr>";
-            }
-            ?>
-          </tbody>
-          </table>
-          <br><br>
+          <h4 class="header left blue-text text-lighten-1 col s12">Bienvenue sur Reservation App. </h4>
+          <br></br>
+          <a href="/tw/reservation?action=insert" class="waves-effect waves-light btn blue">Nouvelle reservation</a>
         </div>
-        <br><br>
-
       </div>
     </div>
     <!--Import jQuery before materialize.js-->

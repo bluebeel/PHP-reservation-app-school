@@ -22,7 +22,6 @@ function reservationController($view, $db)
     $action = "";
     /** gets the step from current form
      *  the step help us to know where we are in the recording process of a reservation
-     *
      */
     $step = isset($_POST['step']) ? $_POST['step'] : null;
     if (isset($_GET['action'])) {
@@ -45,7 +44,6 @@ function reservationController($view, $db)
             switch ($step) {
                 /** Validation of the form, error handling and
                  *  redirection to the correct view according to that
-                 *
                  */
             case 1:
                 if (isset($_POST['cancel']) && $_POST['cancel'] == "Annuler la réservation") {
@@ -64,7 +62,8 @@ function reservationController($view, $db)
                     if (empty($_POST["id_place"])) {
                         $placeErr = "Le nombre de place est requis.";
                         $error = true;
-                    } elseif ((int)input_validation($_POST["id_place"]) < 1 || (int)input_validation($_POST["id_place"]) > 10) {
+                    } elseif ((int)input_validation($_POST["id_place"]) < 1 ||
+                    (int)input_validation($_POST["id_place"]) > 10) {
                         $placeErr = "Veuillez entrer un nombre compris entre 1 et 10.";
                         $error = true;
                     } else {
@@ -149,7 +148,8 @@ function reservationController($view, $db)
                     $_SESSION["res"] = $reservation;
                     $view->display('index.php');
                 } else {
-                    $result = $db->connect()->prepare("INSERT INTO reservation(Destination, Place, Somme, Assurance, Personnes) VALUES (?, ?, ?, ?, ?)");
+                    $result = $db->connect()->prepare("INSERT INTO reservation(Destination, Place, Somme, Assurance, Personnes)
+                    VALUES (?, ?, ?, ?, ?)");
                     $result->bind_param("ssiss", $Destination, $Place, $Somme, $Assurance, $Personnes);
                     $Destination = $_SESSION["res"]->destination();
                     $Place = $_SESSION["res"]->place();
@@ -196,13 +196,13 @@ function reservationController($view, $db)
             switch ($step) {
                 /** Validation of the form, error handling and
                  *  redirection to the correct view according to that
-                 *
                  */
             case 1:
                 if (isset($_POST['cancel']) && $_POST['cancel'] == "Annuler l'édit'") {
                     $reservation = new Reservation;
                     $_SESSION["res"] = $reservation;
-                    $view->display('index.php');
+                    header("Location: /tw/");
+                    die();
                 } else {
                     if ($_POST["id_destination"] == "") {
                         $destinationErr = "La destination est requise.";
@@ -215,7 +215,8 @@ function reservationController($view, $db)
                     if (empty($_POST["id_place"])) {
                         $placeErr = "Le nombre de place est requis.";
                         $error = true;
-                    } elseif ((int)input_validation($_POST["id_place"]) < 1 || (int)input_validation($_POST["id_place"]) > 10) {
+                    } elseif ((int)input_validation($_POST["id_place"]) < 1
+                    || (int)input_validation($_POST["id_place"]) > 10) {
                         $placeErr = "Veuillez entrer un nombre compris entre 1 et 10.";
                         $error = true;
                     } else {
@@ -250,7 +251,8 @@ function reservationController($view, $db)
                 } elseif (isset($_POST['cancel']) && $_POST['cancel'] == "Annuler l'edit'") {
                     $reservation = new Reservation;
                     $_SESSION["res"] = $reservation;
-                    $view->display('index.php');
+                    header("Location: /tw/");
+                    die();
                 } else {
                     for ($num = 0; $num < $reservation->place(); $num++) {
                         if (empty($_POST["id_nom_" . $num])) {
@@ -292,14 +294,15 @@ function reservationController($view, $db)
 
             case 3:
                 if (isset($_POST['before']) && $_POST['before'] == "Retour à la page précédente") {
-                    $view->assign("person", $person);
                     $view->assign("nameErr", $nameErr);
                     $view->assign("ageErr", $ageErr);
+                    $view->assign("person", $_SESSION["res"]->personne());
                     $view->display('form2.php');
                 } elseif (isset($_POST['cancel']) && $_POST['cancel'] == "Annuler l'édit'") {
                     $reservation = new Reservation;
                     $_SESSION["res"] = $reservation;
-                    $view->display('index.php');
+                    header("Location: /tw/");
+                    die();
                 } else {
                     $result = $db->connect()->prepare("UPDATE reservation SET Destination=?, Place=?, Somme=?, Assurance=?, Personnes=? WHERE ID=?");
                     $result->bind_param("ssissi", $Destination, $Place, $Somme, $Assurance, $Personnes, $id);
@@ -334,7 +337,8 @@ function reservationController($view, $db)
                 break;
 
             default:
-                $result = $db->select("SELECT * FROM reservation WHERE ID=" . $_SESSION["id"] . "");
+                $result = $db->select("SELECT * FROM reservation WHERE ID="
+                 . $_SESSION["id"] . "");
                 if (empty($result)) {
                     header("Location: /tw/reservation?action=insert");
                     die();
@@ -357,14 +361,13 @@ function reservationController($view, $db)
 
     case "delete":
         $result = $db->query("DELETE FROM reservation WHERE ID=" . $_SESSION["id"] . "");
-        header("Location: /tw/");
+        header("Location: /tw/admin");
         die();
         break;
     }
 }
 
 // Function to validate input to prevent XSS injections.
-
 function input_validation($data)
 {
     $data = trim($data);
